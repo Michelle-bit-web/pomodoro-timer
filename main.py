@@ -1,8 +1,6 @@
 import tkinter
 from tkinter import *
-import time
-
-from pycparser.c_ast import While
+import math
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -16,15 +14,19 @@ LONG_BREAK_MIN = 20
 
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
-    print('reset')
+    count_down(WORK_MIN)
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 def start_timer():
-    count_down(5)
+    count_down(WORK_MIN*60)
+    start_button.config(default="disabled")
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
-    canvas.itemconfig(timer, text=count)
+    count_min = math.floor(count / 60) #Only takes last whole number
+    count_sec = count % 60
+
+    canvas.itemconfig(timer, text=f"{count_min}:{count_sec}")
     if count > 0:
         window.after(1000, count_down, count - 1 )
 
