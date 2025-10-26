@@ -1,8 +1,8 @@
-# 🍅 Pomodoro Timer (Python + Tkinter)
+# Pomodoro Timer
 
 A simple and elegant **Pomodoro Timer** built with **Python 3.13** using **Tkinter** and the **Canvas widget**.  
 This project helps improve productivity and focus by implementing the **Pomodoro Technique**. This is defined by alternating periods of deep work and short breaks.
-
+<div style="width:90px"> ![](./images/tomato.png) </div>
 ---
 
 ## 🎯 Features
@@ -24,6 +24,9 @@ This project helps improve productivity and focus by implementing the **Pomodoro
 4. Repeat to stay productive while avoiding burnout.  
 
 ---
+## 🖼️ Preview
+![](./images/pomodoro_preview.png)
+--- 
 
 ## 🛠️ Tech Stack
 
@@ -39,7 +42,7 @@ This project helps improve productivity and focus by implementing the **Pomodoro
 Make sure you have Python 3.13 installed on your system.
 
 ```bash
-python --version
+ python --version
 ```
 
 ---
