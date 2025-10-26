@@ -8,29 +8,54 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
-SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
+WORK_MIN = 1
+SHORT_BREAK_MIN = 1
+LONG_BREAK_MIN = 1
+repetition = 0
+timer_running = None
 
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
-    count_down(WORK_MIN)
+    global repetition, timer_running
+    window.after_cancel(timer_running)
+    repetition = 0
+    canvas.itemconfig(timer, text="00:00")
+    headline.config(text="Timer", fg=GREEN)
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 def start_timer():
-    count_down(WORK_MIN*60)
-    start_button.config(default="disabled")
+    global repetition
+    repetition += 1
+
+    if repetition % 8 == 0:
+        headline.config(text="Long Break", fg=RED)
+        count_down(LONG_BREAK_MIN * 60)
+    elif repetition % 2 == 0:
+        headline.config(text="Short Break", fg=PINK)
+        count_down(SHORT_BREAK_MIN * 60)
+    else:
+        headline.config(text="Work Time", fg=GREEN)
+        count_down(WORK_MIN * 60)
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
+    global timer_running
+
     count_min = math.floor(count / 60) #Only takes last whole number
     count_sec = count % 60
 
+    if count_sec == 0:
+        count_sec = "00"
+    elif count_sec < 10:
+        count_sec = f"0{count_sec}"
+    if count_min < 10:
+        count_min = f"0{count_min}"
     canvas.itemconfig(timer, text=f"{count_min}:{count_sec}")
+
     if count > 0:
-        window.after(1000, count_down, count - 1 )
-
-
+        timer_running = window.after(1000, count_down, count - 1 )
+    else:
+        start_timer()
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Pomodoro")
